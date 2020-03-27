@@ -120,12 +120,14 @@ export const createKeyframeStylesheet = (keyframeName: string, keyframeRules: st
 
   const existingStylesheet = styleContainer.querySelector('#' + keyframeName);
   if (existingStylesheet) {
+    existingStylesheet.dataset.elCount = `${+existingStylesheet.dataset.elCount + 1}`; // increase the element count by 1
     return existingStylesheet;
   }
 
   const stylesheet = (element.ownerDocument || document).createElement('style');
   stylesheet.id = keyframeName;
   stylesheet.textContent = `@${keyframePrefix}keyframes ${keyframeName} { ${keyframeRules} } @${keyframePrefix}keyframes ${keyframeName}-alt { ${keyframeRules} }`;
+  stylesheet.dataset.elCount = '1';  // how many elements are using the stylesheet
 
   styleContainer.appendChild(stylesheet);
 

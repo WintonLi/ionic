@@ -170,7 +170,11 @@ export const createAnimation = (animationId?: string): Animation => {
        * cleaned up a particular stylesheet
        */
       if (stylesheet && stylesheet.parentNode) {
-        stylesheet.parentNode.removeChild(stylesheet);
+        if(stylesheet.dataset.elCount === '1'){
+          stylesheet.parentNode.removeChild(stylesheet);  // this is the last one and we can safely remove the stylesheet.
+        } else {
+          stylesheet.dataset.elCount = `${+<string>stylesheet.dataset.elCount - 1}`;  // some other elements are using the stylesheet.
+        }
       }
     });
 
